@@ -84,6 +84,22 @@ export class Auth {
         .catch(function (e) {
             console.error(e);
         });
+        this.keycloak.onTokenExpired = () => {
+            //Setting the update (refresh) of our token
+            this.keycloak.updateToken(5).then((refreshed) => {
+                if (refreshed) {
+                    localStorage.setItem(
+                        this.localStorageMapping.access_token,
+                        this.keycloak.token
+                    );
+                    localStorage.setItem(
+                        this.localStorageMapping.refresh_token,
+                        this.keycloak.refreshToken
+                    );
+                    localStorage.setItem(this.localStorageMapping.exp, this.keycloak.tokenParsed["exp"]);
+                }
+            });
+        };
     }
 
     //This builds initial parameters and add the access token and refresh token. 
