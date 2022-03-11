@@ -4,7 +4,8 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-        console.log(Registry.auth);
+        //console.log(Registry.auth);
+		Registry.auth.inBrowserInit();
 	});
 </script>
 <main>

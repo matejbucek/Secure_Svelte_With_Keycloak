@@ -6,15 +6,21 @@ export class Auth{
     private observable: Observable<User>;
     private user: User;
     private initInProgress: boolean = false;
+    private options: any;
 
     public constructor(options: any){
         this.observable = new Observable<User>();
+        this.options = options;
+    }
+
+    public inBrowserInit(){
         //@ts-ignore
-        this.keycloak = new Keycloak(options);
+        this.keycloak = new Keycloak(this.options);
         this.user = null;
         if(localStorage.getItem("access_token") !== null)
             this.init(this.buildInitParams());
     }
+
 
     private init(params?){
         this.initInProgress = true;
